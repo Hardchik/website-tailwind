@@ -44,7 +44,7 @@ const SignIn = () => {
                 </div>
                 <div className="block w-full mt-3 space-y-3">
                     <a href='#' className="text-sm w-full text-blue-400 font-bold">Forgot password?</a>
-                    <button onClick={() => {navigate('/dashboard')}} className="w-full p-3 bg-pink-400 block align-center">Continue</button>
+                    <button onClick={() => {navigate('/dashboard')}} className="w-full p-3 bg-pinky block align-center">Continue</button>
                 </div>
                 <div className="flex text-sm mt-2"><p>Don't have an account? <a href="/signup" className="text-blue-400 font-medium">Sign up</a></p></div>
                 <div className="h-full flex justify-center text-middle align-center w-full align-middle space-x-2 mt-2"><hr className="w-24" /><p className="text-xs">OR</p><hr className="w-24" /></div>

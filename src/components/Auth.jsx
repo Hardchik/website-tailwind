@@ -8,8 +8,8 @@ const Auth = () => {
           <div className="inline-block align-middle min-h-full">
             <p className="text-center mb-5 font-bold text-xl">App</p>
             <div className="flex justify-center gap-5">
-                <button className="p-3 bg-pink-400 text-white-100 font-medium rounded hover:bg-gray-200" onClick={() => {navigate('/login')}}>LogIn</button>
-                <button className="p-3 bg-pink-400 text-white-100 font-medium rounded hover:bg-gray-200" onClick={() => {navigate('/signup')}}>SignUp</button>
+                <button className="p-3 bg-pinky text-white-100 font-medium rounded hover:bg-gray-200" onClick={() => {navigate('/login')}}>LogIn</button>
+                <button className="p-3 bg-pinky text-white-100 font-medium rounded hover:bg-gray-200" onClick={() => {navigate('/signup')}}>SignUp</button>
             </div>
             
           </div>

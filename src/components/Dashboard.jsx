@@ -2,30 +2,33 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
+  // CalendarIcon,
+  // ChartPieIcon,
+  // DocumentDuplicateIcon,
+  // FolderIcon,
+  // HomeIcon,
+  // UsersIcon,
   XMarkIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline'
 import DeleteModal from './Delete'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import RichText from './TextEditor/RichText.tsx';
 
 
 const navigation = [
-  { name: 'Document', href: '#', icon: HomeIcon, current: true },
-  { name: 'Brainstorm', href: '#', icon: UsersIcon, current: false },
+  { name: 'Document', href: '#', icon: PencilIcon, current: true },
+  // { name: 'Brainstorm', href: '#', icon: PencilIcon, current: false },
 //   { name: 'Projects', href: '#', icon: FolderIcon, current: false },
 //   { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
 //   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
 //   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
 const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+  { id: 1, name: 'Upgrade', href: '#', initial: 'U', current: false },
+  { id: 2, name: 'Discord', href: '#', initial: 'D', current: false },
+  { id: 3, name: 'Resources', href: '#', initial: 'R', current: false },
+  { id: 4, name: 'Log out', href: '#', initial: 'L', current: false },
 ]
 
 function classNames(...classes) {
@@ -45,6 +48,18 @@ export default function Dashboard() {
   useEffect(() => {
     console.log(documents)
   }, [documents])
+
+  useEffect(()=> {
+    const ww = document.getElementById('main')
+    if(menuOptions == 'Document') {
+      ww.classList.remove('bg-gray-200')
+      ww.classList.add('bg-white')
+    }
+    else {
+      ww.classList.remove('bg-white')
+      ww.classList.add('bg-gray-200')
+    }
+  }, [menuOptions])
 
   const SubmitDocumentHandler = () => {
     setDocuments(documents.concat({id: Math.random()*1000, value: searchDocument}));
@@ -121,12 +136,13 @@ export default function Dashboard() {
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
-                    <div className="flex h-16 shrink-0 items-center">
-                      <img
+                    <div className="flex h-16 shrink-0 items-center border-b">
+                      {/* <img
                         className="h-8 w-auto"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                         alt="Your Company"
-                      />
+                      /> */}
+                      <p className='font-bold w-full text-[30px]'>Delilah</p>
                     </div>
                     <nav className="flex flex-1 flex-col justify-space-between">
                       <ul role="list" className="flex flex-1 flex-col h-full gap-y-7">
@@ -139,8 +155,8 @@ export default function Dashboard() {
                                   onClick={() => {setMenuOptions(item.name)}}
                                   className={classNames(
                                     menuOptions === item.name
-                                      ? 'bg-gray-50 text-indigo-600'
-                                      : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                      ? 'bg-pinky text-black'
+                                      : 'text-black hover:text-black hover:bg-pinky',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
@@ -168,17 +184,17 @@ export default function Dashboard() {
                                           onClick={() => setMenuOptions(doc.id)}
                                           className={classNames(
                                           menuOptions === doc.id
-                                              ? 'bg-gray-50 text-indigo-600'
-                                              : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                              ? 'bg-pinky text-black'
+                                              : 'text-black hover:text-black hover:bg-pinky',
                                           'group cursor-pointer flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                           )}
                                       >
                                           <span
                                           className={classNames(
                                               menuOptions === doc.id
-                                              ? 'text-indigo-600'
-                                              : 'text-gray-400 group-hover:text-indigo-600',
-                                              'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[0.625rem] font-medium bg-white'
+                                              ? 'text-black'
+                                              : 'text-black group-hover:text-black',
+                                              'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[0.625rem] font-medium'
                                           )}
                                           >
                                           {/* {team.initial} */}
@@ -211,7 +227,7 @@ export default function Dashboard() {
                         </ul>
                         <ul role="list" className="-mx-2 space-y-1">
                         <li>
-                          <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                          <div className="text-xs font-semibold leading-6 text-gray-400 border-t"></div>
                           <ul role="list" className="-mx-2 mt-2 space-y-1">
                             {teams.map((team) => (
                               <li key={team.name}>
@@ -220,16 +236,16 @@ export default function Dashboard() {
                                   onClick={() => {setMenuOptions(team.name)}}
                                   className={classNames(
                                     menuOptions === team.name
-                                      ? 'bg-gray-50 text-indigo-600'
-                                      : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                      ? 'bg-pinky text-black'
+                                      : 'text-black hover:text-black hover:bg-pinky',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
                                   <span
                                     className={classNames(
                                       menuOptions === team.name
-                                        ? 'text-indigo-600 border-indigo-600'
-                                        : 'text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                                        ? 'text-black'
+                                        : 'text-black border-black group-hover:border-black group-hover:text-black',
                                       'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white'
                                     )}
                                   >
@@ -253,12 +269,13 @@ export default function Dashboard() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
-            <div className="flex h-16 shrink-0 items-center">
-              <img
+            <div className="flex h-16 shrink-0 items-center mb-3 border-b">
+              {/* <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt="Your Company"
-              />
+              /> */}
+              <p className='font-bold w-full text-[30px]'>Delilah</p> 
             </div>
             <nav className="flex flex-1 flex-col justify-space-between">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -271,8 +288,8 @@ export default function Dashboard() {
                           href={item.href}
                           className={classNames(
                             menuOptions === item.name
-                              ? 'bg-gray-50 text-indigo-600'
-                              : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                              ? 'bg-pinky text-black'
+                              : 'text-black hover:text-black hover:bg-pinky',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
@@ -300,17 +317,17 @@ export default function Dashboard() {
                                 onClick={() => setMenuOptions(doc.id)}
                                 className={classNames(
                                 menuOptions === doc.id
-                                    ? 'bg-gray-50 text-indigo-600'
-                                    : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                    ? 'bg-pinky text-black'
+                                    : 'text-black hover:text-black hover:bg-pinky',
                                 'group cursor-pointer flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                 )}
                             >
                                 <span
                                 className={classNames(
                                     menuOptions === doc.id
-                                    ? 'text-indigo-600'
-                                    : 'text-gray-400 group-hover:text-indigo-600',
-                                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[0.625rem] font-medium bg-white'
+                                    ? 'text-black'
+                                    : 'text-black group-hover:text-black',
+                                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[0.625rem] font-medium'
                                 )}
                                 >
                                 {/* {team.initial} */}
@@ -343,7 +360,7 @@ export default function Dashboard() {
                 </ul>
                 <ul role="list" className="-mx-2 space-y-1">
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                  <div className="text-xs font-semibold leading-6 text-gray-400 border-t"></div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
@@ -352,16 +369,16 @@ export default function Dashboard() {
                           onClick={() => setMenuOptions(team.name)}
                           className={classNames(
                             menuOptions === team.name
-                              ? 'bg-gray-50 text-indigo-600'
-                              : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                              ? 'bg-pinky text-black'
+                              : 'text-black hover:text-black hover:bg-pinky',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <span
                             className={classNames(
                               menuOptions === team.name
-                                ? 'text-indigo-600 border-indigo-600'
-                                : 'text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                                ? 'text-black border-indigo-600'
+                                : 'text-black border-black group-hover:border-black group-hover:text-black',
                               'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white'
                             )}
                           >
@@ -397,7 +414,7 @@ export default function Dashboard() {
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
-          <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">COMPANY NAME</div>
+          <div className="flex-1 text-2xl font-bold leading-6 text-gray-900">Delilah</div>
           <a href="#">
             <span className="sr-only">Your profile</span>
             <img
@@ -408,18 +425,51 @@ export default function Dashboard() {
           </a>
         </div>
 
-        <main className="py-10 lg:pl-72 h-full flex justify-center">
-          <div className="px-4 sm:px-6 lg:px-8 h-full p-80 align-center">
+        <main id="main" className="py-10 min-[0px]:h-[90vh] lg:h-[100vh] lg:pl-72 h-full flex bg-gray-200 justify-center">
             { menuOptions === 'Document'?
-            <div className=''>
-                <div className='font-bold mb-5 text-center'>Hey HARDIK, what do you want to ask?</div>
-                <div className='flex'>
-                    <input value={searchDocument} onChange={(e) => setSearchDocument(e.target.value)} className='w-96 border-2 h-10' placeholder='Ask something' />
-                    <button onClick={SubmitDocumentHandler} className='p-2 hover:bg-gray-200 hover:text-gray-900 bg-pink-400 text-gray-100'>Submit</button>
+            (<div className="px-4 sm:px-6 lg:px-8 h-full min-[0px]:py-36 sm:p-48 align-center">
+            <div className='min-[0px]:w-full md:w-[35rem]'>
+                <div className='font-bold mb-5 text-center w-full'>Hey HARDIK, what are you writing about today?</div>
+                <div className='flex shadow-xl w-full'>
+                    <input value={searchDocument} onChange={(e) => setSearchDocument(e.target.value)} className='w-full border p-2 h-10 rounded-l-lg' placeholder='A short description of your essay' />
+                    <button onClick={SubmitDocumentHandler} className='p-2 hover:bg-gray-200 hover:text-gray-900 bg-pinky text-gray-100 rounded-r-lg'>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                      </svg>
+                    </button>
                 </div>
-            </div>:<></>
+                <div className='p-4 mt-5'>
+                    <div className='font-bold text-gray-400 pb-2 border-b'>Not sure? Here's some suggestions.</div>
+                    <div className='min-[0px]:text-sm sm:text-md md:text-xl cursor-pointer p-2 border-b hover:italic' onClick={() => setSearchDocument('The significance of the Magna Carta in legal history')}>The significance of the Magna Carta in legal history</div>
+                    <div className='min-[0px]:text-sm sm:text-md  md:text-xl cursor-pointer p-2 border-b hover:italic' onClick={() => setSearchDocument('The philosophy of religion: the existence of God')}>The philosophy of religion: the existence of God</div>
+                    <div className='min-[0px]:text-sm sm:text-md md:text-xl cursor-pointer p-2 hover:italic' onClick={() => setSearchDocument("The history of women's suffrage")}>The history of women's suffrage</div>
+                </div>
+            </div></div>):(<>
+                {<div className='min-[0px]:block min-[0px]:space-y-10 lg:flex lg:space-x-10'> 
+                  <div className='align-center'>
+                    <RichText />
+                  </div>
+                  <div className='min-[0px]:hidden min-[400px]:block align-center pl-10 space-y-10'>
+                    <div className='bg-white rounded w-[20rem]'>
+                      <div className='font-semibold border-b p-2'>Commands</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Generate Content</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Transform Text</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Show don't tell</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Write a sentence</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Write a paragraph</div>
+                    </div>  
+                    <div className='bg-white rounded w-[20rem]'>
+                      <div className='font-semibold border-b p-2'>Commands</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Generate Content</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Transform Text</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Show don't tell</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Write a sentence</div>
+                      <div className='cursor-pointer p-2 rounded hover:bg-pinky'>Write a paragraph</div>
+                    </div> 
+                  </div>        
+                </div>}
+            </>)
             }
-          </div>
         </main>
       </div>
 
